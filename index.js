@@ -2,11 +2,13 @@ var express = require('express')
 var bodyParser = require('body-parser') 
 
 var app = express()
+var pkg = require('./package.json')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.all('*', (req, res) => {
   res.json({
+    version: pkg.version,
     service: process.env.SERVICE_NAME || undefined, // Keys with value `undefined` are omitted during JSON serialization
     path: req.path,
     headers: req.headers,
